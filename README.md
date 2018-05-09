@@ -5,3 +5,4 @@ Install
 $ git clone https://github.com/royanguiano/slider_React.git
 $ cd sliderReact
 $ npm install
+ 
