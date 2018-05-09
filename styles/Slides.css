@@ -1,0 +1,10 @@
+.slide{
+    display: inline-block;
+    vertical-align: top;
+    height: 50px; 
+    width: 20px; 
+    border-right: 1px solid black;
+}
+.slide:last-child {
+    border-right: none; 
+}
