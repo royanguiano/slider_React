@@ -7,11 +7,12 @@ class Carousel extends Component{
         super(props)
         this.handleLeftNav = this.handleLeftNav.bind(this)
         this.onResize = this.onResize.bind(this)
-        this.trotlleResize = throttle(this.onResize, 250)
+        this.trotlleResize = throttle(this.onResize, 250) //using loaddash library to throttle when resizing the window
         this.state = {
             numOfSlidesToScroll : 4
         }
     }
+    //onresize of screen, only slide the number of slides that can fit in the screen
     onResize(){
         this.checkNumberOfSlidesToScroll()
     }
@@ -21,6 +22,8 @@ class Carousel extends Component{
     componentWillUnMount(){
         window.removeEventListener('resize', this.trotlleResize)
     }
+    //if the window size is smaller then 900 px, then only show 2 slides
+    //if the window size is bigger then 900 px, then show 4 slides to slides 
     checkNumberOfSlidesToScroll(){
         var numOfSlidesToScroll; 
         if( window.innerWidth <= 900 ){
@@ -34,6 +37,7 @@ class Carousel extends Component{
             })
         }
     }
+    //on left arrow click, slide carouselViewport.scrollLeft + (numOfSlidesToScroll * widthOfSlide)
     handleLeftNav(e){
         const {carouselViewport} = this.refs
         var numOfSlidesToScroll = this.state.numOfSlidesToScroll
@@ -41,6 +45,7 @@ class Carousel extends Component{
         var newPosition = carouselViewport.scrollLeft + (numOfSlidesToScroll * widthOfSlide)
         carouselViewport.scrollLeft = newPosition
     }
+    //on left arrow click, carouselViewport.scrollLeft - (numOfSlidesToScroll * widthOfSlide)
     handleRightNav(e){
         const {carouselViewport} = this.refs
         var numOfSlidesToScroll = this.state.numOfSlidesToScroll
@@ -49,10 +54,12 @@ class Carousel extends Component{
         carouselViewport.scrollLeft = newPosition
     }
 
+    //render slides from array given of images
     renderSlides(){
         let imagesArr = [{url: 'google.com', name: 'image1'}, 
                         {url: 'yahoo.com', name: 'image2'}]
 
+    //iterate array and crate a new slide component with properties of name, and url
         return imagesArr.map((state) =>{
             return (<Slide name = { state.name } src = { state.url } />)   
         })
